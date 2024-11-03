@@ -1,18 +1,18 @@
-#Email Summarizer
+# Email Summarizer
 This project is a React and Flask-based email summarization application that leverages the Gmail API and Gemini model for efficient summarization of unread emails. This application fetches unread emails from the user's Gmail inbox, summarizes the content for quick insights, and allows marking emails as read.
 
-##Features
-Gmail API Integration: Authenticate and fetch unread emails from the user's Gmail inbox.
-Email Summarization: Summarizes the content of each email using the Gemini AI model.
-React Frontend: Displays email summaries in a user-friendly interface with options to mark emails as read.
+## Features
+**Gmail API Integration** : Authenticate and fetch unread emails from the user's Gmail inbox.
+**Email Summarization**: Summarizes the content of each email using the Gemini AI model.
+**React Frontend**: Displays email summaries in a user-friendly interface with options to mark emails as read.
 
-##Prerequisites
+## Prerequisites
 Node.js (for running the React frontend)
 Python (for the Flask backend)
 Pip (for installing Python dependencies)
 Gmail API access: A Google Cloud project set up for Gmail API with OAuth 2.0 credentials.
 
-##Installation
+## Installation
 
 Clone the Repository:
 git clone https://github.com/your-username/email-summarizer.git
