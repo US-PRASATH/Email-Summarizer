@@ -17,10 +17,6 @@ import io
 import quopri
 from urllib import parse
 from localStoragePy import localStoragePy
-
-from langchain.prompts import ChatPromptTemplate, PromptTemplate
-from langchain_core.output_parsers import StrOutputParser
-from langchain_community.chat_models import ChatOllama
 import google.generativeai as genai
 
 app = Flask(__name__)
