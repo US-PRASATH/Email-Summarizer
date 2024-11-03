@@ -1,0 +1,16 @@
+Flask==2.2.2
+Flask-Cors==3.0.10
+google-auth==2.23.4
+google-auth-oauthlib==1.0.0
+google-auth-httplib2==0.1.0
+google-api-python-client==2.93.0
+beautifulsoup4==4.12.2
+pytesseract==0.3.10
+Pillow==9.5.0
+python-dateutil==2.8.2
+localStoragePy==1.0.5
+requests==2.31.0
+quopri==1.0.1
+langchain==0.0.201
+langchain-core==0.0.201
+langchain-community==0.0.16
