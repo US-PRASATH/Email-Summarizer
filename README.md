@@ -15,7 +15,7 @@ Gmail API access: A Google Cloud project set up for Gmail API with OAuth 2.0 cre
 ## Installation
 
 Clone the Repository:
-git clone https://github.com/your-username/email-summarizer.git
+git clone https://github.com/US-PRASATH/Email-Summarizer.git
 cd email-summarizer
 
 Backend Setup (Flask):
