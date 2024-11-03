@@ -26,7 +26,7 @@ import google.generativeai as genai
 app = Flask(__name__)
 CORS(app)  # Enable CORS
 
-genai.configure(api_key="AIzaSyBR9qyJ6S7RBBQfGhmZM39sE19Z4Xa6J9A")
+genai.configure(api_key="YOUR-API-KEY")
 model = genai.GenerativeModel("gemini-1.5-flash")
 
 # Create the prompt template for summarization
