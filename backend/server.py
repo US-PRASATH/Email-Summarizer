@@ -78,20 +78,33 @@ SCOPES = ['https://www.googleapis.com/auth/gmail.modify']  # 'modify' allows mar
 def authenticate_gmail():
     """Authenticate and return Gmail API service."""
     creds = None
-    localstorage = localStoragePy('emailsummarizer','sqlite')
-    token = localstorage.getItem('token')
-    #if token:
-    if os.path.exists('token.json'):
-        creds = Credentials.from_authorized_user_file('token.json', SCOPES)
+    # Create a new instance of localStoragePy in each request
+    localstorage = localStoragePy('gmail_auth', 'sqlite')
+    # Retrieve the token from localStorage if available
+    token_json = localstorage.getItem('token')
+    
+    if token_json:
+        creds = Credentials.from_authorized_user_info(eval(token_json), SCOPES)  # eval converts JSON string to dictionary
+    
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
-            creds.refresh(Request())
-        else:
+            try:
+                creds.refresh(Request())
+            except RefreshError:
+                print("Refresh token has expired or is invalid. Re-authenticating...")
+                creds = None
+        
+        if not creds:
+            # Clear old token if re-authenticating
+            localstorage.removeItem('token')
+
+            # Run the authorization flow
             flow = InstalledAppFlow.from_client_secrets_file('client_secret.json', SCOPES)
-            creds = flow.run_local_server(port=8080)
-        with open('token.json', 'w') as token:
-            token.write(creds.to_json())
-        #localstorage.setItem('token',creds.to_json())
+            creds = flow.run_local_server(port=8080, access_type='offline', prompt='consent')
+
+            # Save the credentials to local storage
+            localstorage.setItem('token', creds.to_json())
+    
     return build('gmail', 'v1', credentials=creds)
 
 def list_unread_messages(service, page_token=None):
