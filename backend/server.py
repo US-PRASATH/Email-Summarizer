@@ -80,8 +80,8 @@ def authenticate_gmail():
     creds = None
     localstorage = localStoragePy('emailsummarizer','sqlite')
     token = localstorage.getItem('token')
-    if token:
-    #if os.path.exists('token.json'):
+    #if token:
+    if os.path.exists('token.json'):
         creds = Credentials.from_authorized_user_file('token.json', SCOPES)
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
@@ -89,9 +89,9 @@ def authenticate_gmail():
         else:
             flow = InstalledAppFlow.from_client_secrets_file('client_secret.json', SCOPES)
             creds = flow.run_local_server(port=8080)
-        #with open('token.json', 'w') as token:
-            #token.write(creds.to_json())
-        localstorage.setItem('token',creds.to_json())
+        with open('token.json', 'w') as token:
+            token.write(creds.to_json())
+        #localstorage.setItem('token',creds.to_json())
     return build('gmail', 'v1', credentials=creds)
 
 def list_unread_messages(service, page_token=None):
@@ -216,6 +216,19 @@ def get_emails():
     emails = get_unread_emails()
     #return jsonify(emails)
     return emails
+
+@app.route('/mark_as_read/<msg_id>', methods=['POST'])
+def mark_as_read(msg_id):
+    """Mark the specified email as read."""
+    service = authenticate_gmail()
+    try:
+        # Remove 'UNREAD' label to mark as read
+        service.users().messages().modify(
+            userId='me', id=msg_id, body={'removeLabelIds': ['UNREAD']}
+        ).execute()
+        return jsonify({"message": "Email marked as read successfully."}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
     app.run(port=5000)
